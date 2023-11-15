@@ -1,4 +1,5 @@
 import { useState } from "react"
+import deletesvg from './assets/delete.svg'
 
 function App() {
 
@@ -54,7 +55,7 @@ function App() {
                   <label htmlFor="">{item}</label>
                 </div>
                 <button className="delete-button" onClick={() => deleteTodo(index)}>
-                  <img src="/src/assets/delete.svg" alt="" />
+                  <img src={deletesvg} alt="" />
                 </button>
               </li>
             </>
