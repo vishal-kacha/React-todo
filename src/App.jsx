@@ -54,7 +54,7 @@ function App() {
                   <label htmlFor="">{item}</label>
                 </div>
                 <button className="delete-button" onClick={() => deleteTodo(index)}>
-                  <img src="../src/assets/delete.svg" alt="" />
+                  <img src="/src/assets/delete.svg" alt="" />
                 </button>
               </li>
             </>
