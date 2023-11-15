@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: white;
+    color: black;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.main {
+    max-width: 500px;
+    margin: 1rem auto;
+    width: 90%;
+}
+
+h1 {
+    margin-bottom: 1rem;
+}
+
+input[type="text"] {
+    color: black;
+    background-color: white;
+    font-size: 1.3rem;
+    padding: 10px 10px;
+    margin-right: 1rem;
+    border-radius: 5px;
+    border: 2px solid black;
+}
+
+input[type=text]:focus {
+    outline: none;
+}
+
+button {
+    background-color: lightskyblue;
+    padding: 12px;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: black;
+    border-radius: 5px;
+    border: transparent;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:active {
+    transform: scale(0.9);
+}
+
+ol {
+    margin-top: 1rem;
+}
+
+li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3rem;
+    padding: 0.3rem;
+    list-style-type: none;
+}
+
+.delete-button {
+    background-color: red;
+    padding: 0.4rem 0.6rem;
+}
+
+
+input[type=checkbox] {
+    accent-color: lightskyblue;
+}
+
+label {
+    padding: 0 1rem;
+}
