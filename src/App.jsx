@@ -6,16 +6,17 @@ function App() {
   const [todo, setTodo] = useState([]);
   const [showTooltip, setShowTooltip] = useState(false);
 
-  // useEffect(() => {
-  //   fecthTodo();
-  // }, []);
+  useEffect(() => {
+    fecthTodo();
+  }, []);
 
-  // async function fecthTodo() {
-  //   const res = await fetch("/.netlify/functions/hello");
-  //   const response = await res.json();
-  //   const fetchtodo = response.todo;
-  //   setTodo([...todo, ...fetchtodo]);
-  // }
+  async function fecthTodo() {
+    const res = await fetch("/.netlify/functions/api");
+    const response = await res.json();
+    const databaseresult = response[1];
+    let  todofromdata = databaseresult.savedTodo;
+    setTodo([...todo,...todofromdata])
+  }
 
   function addTodo() {
     if (input.length == 0) {
