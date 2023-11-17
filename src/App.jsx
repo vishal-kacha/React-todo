@@ -14,8 +14,31 @@ function App() {
     const res = await fetch("/.netlify/functions/api");
     const response = await res.json();
     const databaseresult = response[1];
-    let  todofromdata = databaseresult.savedTodo;
-    setTodo([...todo,...todofromdata])
+    let todofromdata = databaseresult.savedTodo;
+    setTodo([...todo, ...todofromdata])
+  }
+
+  async function SaveTododata(params) {
+    const usertodo = [...todo, params]
+    const response = await fetch("/.netlify/functions/api", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(usertodo)
+    });
+
+  }
+
+  async function RemoveData(params) {
+     await fetch("/.netlify/functions/api", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    });
+
   }
 
   function addTodo() {
@@ -26,6 +49,7 @@ function App() {
       setTodo([...todo, input]);
       setInput("");
       setShowTooltip(false);
+      SaveTododata(input);
     }
   }
 
@@ -33,6 +57,7 @@ function App() {
     const newTodo = [...todo];
     newTodo.splice(index, 1);
     setTodo(newTodo);
+    RemoveData(newTodo);
   }
 
   return (
