@@ -6,39 +6,52 @@ function App() {
   const [todo, setTodo] = useState([]);
   const [showTooltip, setShowTooltip] = useState(false);
 
+  let userid = localStorage.getItem('userid');
+
   useEffect(() => {
-    fecthTodo();
+    if (!userid) {
+      createUser();
+    } else {
+      fecthTodo();
+    }
   }, []);
 
-  async function fecthTodo() {
-    const res = await fetch("/.netlify/functions/api");
+  async function createUser() {
+    const res = await fetch('/.netlify/functions/api', {
+      method: 'PUT',
+    });
     const response = await res.json();
-    const databaseresult = response[1];
+    const usr = response.usr;
+    localStorage.setItem('userid', usr) 
+  }
+
+  async function fecthTodo() {
+    const res = await fetch(`/.netlify/functions/api?userid=${userid}`,);
+    const response = await res.json();
+    const databaseresult = response[0];
     let todofromdata = databaseresult.savedTodo;
-    setTodo([...todo, ...todofromdata])
+    setTodo([...todofromdata]);
   }
 
   async function SaveTododata(params) {
     const usertodo = [...todo, params]
-    const response = await fetch("/.netlify/functions/api", {
+    const response = await fetch(`/.netlify/functions/api?userid=${userid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(usertodo)
     });
-
   }
 
   async function RemoveData(params) {
-     await fetch("/.netlify/functions/api", {
+    await fetch(`/.netlify/functions/api?userid=${userid}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(params)
     });
-
   }
 
   function addTodo() {

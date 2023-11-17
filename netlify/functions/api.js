@@ -4,33 +4,51 @@ const app = express();
 
 app.use(express.json());
 
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 const uri = process.env.MongoString;
 const client = new MongoClient(uri);
 const datbase = client.db('Todoapp');
 const collection = datbase.collection('todousr');
 
-async function Getodo() {
-  const todo = await collection.find({}, { _id: 1, todos: 1 }).toArray();
+async function CreateUsr() {
+  const userid = new ObjectId().toString();
+  const usr = await collection.insertOne(
+    { userid: userid, savedTodo: ["Test"] }
+  );
+
+  return userid;
+}
+
+async function Getodo(paramUserId) {
+  const todo = await collection.find(
+    { userid: paramUserId},
+    { projection: { savedTodo: 1, _id: 0 }}
+  ).toArray();
   return todo;
 }
 
-async function SaveTodo(params) {
+async function SaveTodo(userId, params) {
   await collection.updateOne(
-    { userid: "65561f574473a0dd205195e7"},
+    { userid: userId},
     { $set: { savedTodo: [...params] } }
   );
 }
 
 const router = Router();
 router.get('/', async (req, res) => {
-  const todos = await Getodo();
+  const { userid } = req.query;
+  const todos = await Getodo(userid);
   res.send({...todos});
-  res.end();
 });
 
+router.put('/', async (req, res) => {
+  const usr = await CreateUsr();
+  res.send({ usr });
+})
+  
 router.post('/', async (req, res) => {
-  await SaveTodo(req.body);
+  const { userid } = req.query;
+  await SaveTodo(userid, req.body);
   res.send("Updated todo");
 })
 
