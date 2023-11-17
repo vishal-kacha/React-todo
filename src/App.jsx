@@ -22,7 +22,7 @@ function App() {
     });
     const response = await res.json();
     const usr = response.usr;
-    localStorage.setItem('userid', usr) 
+    localStorage.setItem('userid', usr)
   }
 
   async function fecthTodo() {
@@ -77,17 +77,22 @@ function App() {
     <>
       <div className="main">
         <h1>Todo app</h1>
-        <input
-          type="text"
-          name="todoinput"
-          id="todoinput"
-          placeholder="Enter your Todo's"
-          value={input}
-          onChange={(e) => {
-            setInput(e.target.value);
-          }}
-        />
-        <button onClick={addTodo}>Add Todo</button>
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          addTodo();
+        }}>
+          <input
+            type="text"
+            name="todoinput"
+            id="todoinput"
+            placeholder="Enter your Todo's"
+            value={input}
+            onChange={(e) => {
+              setInput(e.target.value);
+            }}
+          />
+          <button>Add Todo</button>
+        </form>
 
         {showTooltip && (
           <div
